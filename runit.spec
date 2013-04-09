@@ -20,9 +20,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 Url:            http://smarden.org/runit/
 Source:         http://smarden.org/runit/runit-%{version}.tar.gz
-Patch:          runit-2.1.1-etc-service.patch
-Patch1:         runit-2.1.1-runsvdir-path-cleanup.patch
-Patch2:         runit-2.1.1-term-hup-option.patch
+Patch:          runit-2.1.1-runsvdir-path-cleanup.patch
+Patch1:         runit-2.1.1-term-hup-option.patch
 
 Obsoletes: runit <= %{version}-%{release}
 Provides: runit = %{version}-%{release}
@@ -54,7 +53,6 @@ echo "%{?_with_dietlibc:diet -Os }%__cc -Os -pipe"      >conf-ld
 popd
 %patch
 %patch1
-%patch2
 
 %build
 sh package/compile
@@ -66,7 +64,7 @@ done
 for i in man/*8 ; do
     %{__install} -D -m 0755 $i %{buildroot}%{_mandir}/man8/${i##man/}
 done
-%{__install} -d -m 0755 %{buildroot}/etc/service
+%{__install} -d -m 0755 %{buildroot}/service
 %{__install} -D -m 0750 etc/2 %{buildroot}%{_sbindir}/runsvdir-start
 
 %clean
@@ -138,7 +136,7 @@ fi
 %{_mandir}/man8/*.8*
 %doc doc/* etc/
 %doc package/CHANGES package/COPYING package/README package/THANKS package/TODO
-%dir /etc/service
+%dir /service
 
 %changelog
 * Fri Jan 20 2012 Joe Miller <joeym@joeym.net> 2.1.1-6
